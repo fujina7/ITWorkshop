@@ -23,6 +23,7 @@
             <li>
                 <a href="<%= product.getUrl() %>"><%= product.getName() %></a><br>
                 価格: <%= product.getPrice() %><br>
+                URL: <%= product.getUrl() %><br>
             </li>
         <% 
                 }
@@ -33,5 +34,6 @@
             }
         %>
     </ul>
+    <a href="InputServlet" id="back">戻る</a>
 </body>
 </html>

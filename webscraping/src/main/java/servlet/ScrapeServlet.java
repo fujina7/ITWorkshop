@@ -45,7 +45,7 @@ public class ScrapeServlet extends HttpServlet {
         } else {
             // エラーメッセージ
             request.setAttribute("error", "URLが正しくありません。");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/scrape.jsp").forward(request, response);
         }
     }
 
@@ -53,44 +53,55 @@ public class ScrapeServlet extends HttpServlet {
     private List<Product> scrapeProducts(String url) {
         List<Product> products = new ArrayList<>();
         try {
-            // H2データベースから商品名と価格のセレクタを取得
-            String[] selectors = H2Database.getProductSelectors();  // 店舗名を気にせずデフォルトでセレクタを取得
-            if (selectors == null) {
+            // H2データベースからすべてのセレクタ情報を取得
+            List<String[]> selectorsList = H2Database.getProductSelectors();  // 複数のセレクタを取得
+            if (selectorsList == null || selectorsList.isEmpty()) {
                 throw new Exception("セレクタ情報が見つかりませんでした。");
             }
-            String productNameSelector = selectors[0];
-            String productPriceSelector = selectors[1];
 
             // Jsoupを使ってHTMLを解析
             Document doc = Jsoup.connect(url).get();
 
-            // セレクタを使って商品情報を取得
-            Elements productElements = doc.select(productNameSelector);
-            Elements priceElements = doc.select(productPriceSelector);
+            // 各セレクタ情報でスクレイピングを実行
+            for (String[] selectors : selectorsList) {
+                String productNameSelector = selectors[0];  // 商品名のセレクタ
+                String productPriceSelector = selectors[1];  // 価格のセレクタ
 
-            // 最大10件まで取得
-            int count = 0;
-            for (int i = 0; i < productElements.size(); i++) {
-                if (count >= 10) {
-                    break;  // 最大10件を超えた場合は終了
+                // セレクタを使って商品情報を取得
+                Elements productElements = doc.select(productNameSelector);
+                Elements priceElements = doc.select(productPriceSelector);
+                
+                
+
+                // 最大10件まで取得
+                int count = 0;
+                for (int i = 0; i < productElements.size(); i++) {
+                    if (count >= 20) {
+                        break;  // 最大10件を超えた場合は終了
+                    }
+
+                    // 商品名を取得
+                    String name = productElements.get(i).text();
+
+                    // 価格を取得（同じインデックスで対応する価格を取得）
+                    String price = (i < priceElements.size()) ? priceElements.get(i).text() : "価格情報なし";
+
+                 // 商品ページのURLを取得（商品名の要素内にある<a>タグのhref属性を取得）
+                    String relativeUrl = productElements.get(i).select("a").attr("href");
+
+                    // 相対URLを絶対URLに変換
+                    String productUrl = relativeUrl.startsWith("http") ? relativeUrl : url + relativeUrl;  // 相対URLを絶対URLに変換
+
+                    
+                    // 商品情報をProductオブジェクトとして格納
+                    products.add(new Product(name, price, productUrl));
+                    count++;
                 }
-
-                // 商品名を取得
-                String name = productElements.get(i).text();
-
-                // 価格を取得（同じインデックスで対応する価格を取得）
-                String price = (i < priceElements.size()) ? priceElements.get(i).text() : "価格情報なし";
-
-                // 商品のURLを取得
-                String productUrl = productElements.get(i).attr("href");
-
-                // 商品情報をProductオブジェクトとして格納
-                products.add(new Product(name, price, productUrl));
-                count++;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return products;
     }
+
 }
