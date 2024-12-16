@@ -8,7 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import DAO.H2Database;  // セレクタ情報を取得するDAOクラスを使用
+import DAO.H2Database;
+import DAO.ProductDAO;  // ProductSaverをインポート
 import Entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,9 +30,13 @@ public class ScrapeServlet extends HttpServlet {
         // セッションに結果を保存
         HttpSession session = request.getSession();
         session.setAttribute("products", products);
-        
+
+        // 商品情報をデータベースに保存
+        ProductDAO.saveProducts(products);  // 商品情報を一括でデータベースに保存
+
         // デバッグ用: セッションに保存された商品数を確認
-        System.out.println("Saved " + products.size() + " products to session.");
+        System.out.println("Saved " + products.size() + " products to session and database.");
+        
     }
 
     @Override
@@ -53,8 +58,8 @@ public class ScrapeServlet extends HttpServlet {
     private List<Product> scrapeProducts(String url) {
         List<Product> products = new ArrayList<>();
         try {
-            // H2データベースからすべてのセレクタ情報を取得
-            List<String[]> selectorsList = H2Database.getProductSelectors();  // 複数のセレクタを取得
+            // H2データベースからセレクタ情報を取得
+            List<String[]> selectorsList = H2Database.getProductSelectors(); 
             if (selectorsList == null || selectorsList.isEmpty()) {
                 throw new Exception("セレクタ情報が見つかりませんでした。");
             }
@@ -64,44 +69,49 @@ public class ScrapeServlet extends HttpServlet {
 
             // 各セレクタ情報でスクレイピングを実行
             for (String[] selectors : selectorsList) {
-                String productNameSelector = selectors[0];  // 商品名のセレクタ
-                String productPriceSelector = selectors[1];  // 価格のセレクタ
+                String productNameSelector = selectors[0]; 
+                String productPriceSelector = selectors[1];
+                String productImageSelector = selectors[2];  // 画像のクラス名（例: image--4OaFX）
 
                 // セレクタを使って商品情報を取得
                 Elements productElements = doc.select(productNameSelector);
                 Elements priceElements = doc.select(productPriceSelector);
-                
-                
+                Elements imageElements = doc.select("img." + productImageSelector);  // 画像クラス名を使って画像要素を取得
 
-                // 最大10件まで取得
                 int count = 0;
                 for (int i = 0; i < productElements.size(); i++) {
-                    if (count >= 20) {
-                        break;  // 最大10件を超えた場合は終了
+                    if (count >= 25) {
+                        break;
                     }
 
                     // 商品名を取得
                     String name = productElements.get(i).text();
 
-                    // 価格を取得（同じインデックスで対応する価格を取得）
+                    // 価格を取得
                     String price = (i < priceElements.size()) ? priceElements.get(i).text() : "価格情報なし";
 
-                 // 商品ページのURLを取得（商品名の要素内にある<a>タグのhref属性を取得）
-                    String relativeUrl = productElements.get(i).select("a").attr("href");
+                    // 画像URLを取得（src属性）
+                    String imageUrl = (i < imageElements.size()) ? imageElements.get(i).attr("src") : "画像情報なし";
 
                     // 相対URLを絶対URLに変換
-                    String productUrl = relativeUrl.startsWith("http") ? relativeUrl : url + relativeUrl;  // 相対URLを絶対URLに変換
+                    if (!imageUrl.startsWith("http")) {
+                        imageUrl = url + imageUrl;  // 相対URLを絶対URLに変換
+                    }
 
-                    
+                    // 商品URL（詳細ページ）の取得
+                    String relativeUrl = productElements.get(i).select("a").attr("href");
+                    String productUrl = relativeUrl.startsWith("http") ? relativeUrl : url + relativeUrl;
+
                     // 商品情報をProductオブジェクトとして格納
-                    products.add(new Product(name, price, productUrl));
+                    products.add(new Product(name, price, productUrl, imageUrl));
                     count++;
+                    
                 }
             }
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return products;
     }
-
 }

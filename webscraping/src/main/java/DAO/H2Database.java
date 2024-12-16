@@ -11,7 +11,7 @@ public class H2Database {
 
     // H2 Databaseに接続するメソッド
     public static Connection getConnection() throws Exception {
-        String url = "jdbc:h2:~/desktop/SQL/sukkiriShop";  // H2データベースのURL（~/testはローカルのデータベース）
+        String url = "jdbc:h2:~/desktop/SQL/sukkiriShop";  // H2データベースのURL
         String user = "sa";  // ユーザー名
         String password = "";  // パスワード
         return DriverManager.getConnection(url, user, password);
@@ -19,50 +19,26 @@ public class H2Database {
 
     public static List<String[]> getProductSelectors() {
         List<String[]> selectorsList = new ArrayList<>();
-        String query = "SELECT product_name_selector, product_price_selector FROM product_selectors";  // すべてのセレクタ情報を取得
-        
+        String query = "SELECT product_name_selector, product_price_selector, product_image_selector FROM product_selectors";  // 画像クラス名を追加
+
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            
+
             ResultSet rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
-                String[] selectors = new String[2];
+                String[] selectors = new String[3];  // 3つのカラム（商品名、価格、画像クラス名）
                 selectors[0] = rs.getString("product_name_selector");
                 selectors[1] = rs.getString("product_price_selector");
+                selectors[2] = rs.getString("product_image_selector");  // 画像クラス名を取得
                 selectorsList.add(selectors);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return selectorsList;  // すべてのセレクタ情報をリストとして返す
     }
 
 
-    
- // すべての商品セレクタ情報を取得するメソッド
-    public static List<String[]> getAllProductSelectors() {
-        List<String[]> selectorsList = new ArrayList<>();
-        String query = "SELECT product_name_selector, product_price_selector FROM product_selectors";  // すべてのセレクタ情報を取得
-        
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()) {
-                String[] selectors = new String[2];
-                selectors[0] = rs.getString("product_name_selector");
-                selectors[1] = rs.getString("product_price_selector");
-                selectorsList.add(selectors);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        return selectorsList;  // すべてのセレクタ情報をリストとして返す
-    }
 }
-    
-

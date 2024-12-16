@@ -2,6 +2,9 @@
 <html>
 <head>
     <title>URL入力</title>
+     <!-- 外部CSSファイルの読み込み -->
+    <link rel="stylesheet" type="text/css" href="css/style2.css">
+    
 </head>
 <body>
     <h2>スクレイピングURLを入力してください</h2>
