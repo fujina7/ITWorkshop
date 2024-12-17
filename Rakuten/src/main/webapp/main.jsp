@@ -7,12 +7,20 @@
 <title>スッキリ商店</title>
  <!-- 外部CSSファイルの読み込み -->
     <link rel="stylesheet" type="text/css" href="css/style2.css">
+    
 
 </head>
 <body>
+
+
 <div class="container">
   <!-- エラーメッセージの表示用DIV -->
-  
+  <!-- 登録完了メッセージの表示 -->
+    <c:if test="${not empty sessionScope.registrationSuccess}">
+        <p style="color: green;">${sessionScope.registrationSuccess}</p>
+        <!-- 登録完了メッセージを表示した後はセッションから削除 -->
+        <c:remove var="registrationSuccess"/>
+    </c:if>
  
 <form action="LoginServlet" method="post" onsubmit="return validateForm()">
 ユーザーID:<input type="text" name="userId" ><br>

@@ -31,3 +31,8 @@ function validateForm() {
     // すべての検証が通った場合はフォームを送信
     return true;
 }
+
+function goBack() {
+        // main.jsp に遷移する
+        window.location.href = 'main.jsp';
+    }

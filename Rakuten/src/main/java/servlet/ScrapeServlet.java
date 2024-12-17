@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import DAO.H2Database;
-import DAO.ProductDAO;  // ProductSaverをインポート
+import DAO.ProductDAO;
 import Entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,38 +23,6 @@ public class ScrapeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // スクレイピング処理（起動時に1回だけ実行）
-    private void startScraping(String url, HttpServletRequest request) {
-        // 商品情報を取得するためにスクレイピングを実行
-        List<Product> products = scrapeProducts(url);
-
-        // セッションに結果を保存
-        HttpSession session = request.getSession();
-        session.setAttribute("products", products);
-
-        // 商品情報をデータベースに保存
-        ProductDAO.saveProducts(products);  // 商品情報を一括でデータベースに保存
-
-        // デバッグ用: セッションに保存された商品数を確認
-        System.out.println("Saved " + products.size() + " products to session and database.");
-        
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = request.getParameter("url");
-
-        if (url != null && !url.isEmpty()) {
-            // スクレイピングを一度だけ開始する
-            startScraping(url, request);  // URLを渡す
-            response.sendRedirect("result.jsp");  // 結果表示ページに遷移
-        } else {
-            // エラーメッセージ
-            request.setAttribute("error", "URLが正しくありません。");
-            request.getRequestDispatcher("/scrape.jsp").forward(request, response);
-        }
-    }
-
-    // 商品情報をスクレイピングするメソッド（例：Jsoupを使用）
     private List<Product> scrapeProducts(String url) {
         List<Product> products = new ArrayList<>();
         try {
@@ -105,13 +73,49 @@ public class ScrapeServlet extends HttpServlet {
                     // 商品情報をProductオブジェクトとして格納
                     products.add(new Product(name, price, productUrl, imageUrl));
                     count++;
-                    
                 }
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return products;
     }
-}
+
+    // スクレイピング後、データベースに保存する処理
+    private void saveProductsToDatabase(List<Product> products) {
+        if (products != null && !products.isEmpty()) {
+            // 商品情報をデータベースに保存
+            ProductDAO.saveProducts(products);  // 商品情報を一括でデータベースに保存
+            System.out.println("Saved " + products.size() + " products to database.");
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = request.getParameter("url");
+        String action = request.getParameter("action");
+
+        if (url != null && !url.isEmpty()) {
+            // スクレイピングを開始
+            List<Product> products = scrapeProducts(url);
+
+            // セッションに保存
+            HttpSession session = request.getSession();
+            session.setAttribute("products", products);
+
+            if ("save".equals(action)) {
+                // 保存ボタンが押された場合にデータベースに保存
+                saveProductsToDatabase(products);
+                request.setAttribute("message", "商品情報が保存されました！");
+            }
+
+            // 結果表示ページに遷移
+            response.sendRedirect("result.jsp");
+
+        } else {
+            // エラーメッセージ
+            request.setAttribute("error", "URLが正しくありません。");
+            request.getRequestDispatcher("/scrape.jsp").forward(request, response);
+        }
+    }
+} 
