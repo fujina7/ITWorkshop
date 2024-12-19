@@ -36,3 +36,13 @@ function goBack() {
         // main.jsp に遷移する
         window.location.href = 'main.jsp';
     }
+
+    
+    // ロード画面が表示された後、3秒後にメインコンテンツを表示する
+window.onload = function() {
+    setTimeout(function() {
+        // ロード画面を非表示にして、メインコンテンツを表示
+        document.getElementById("loading-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+    }, 3);  // 3秒後にメインコンテンツを表示
+};

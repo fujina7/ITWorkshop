@@ -11,7 +11,7 @@ public class H2Database {
 
     // H2 Databaseに接続するメソッド
     public static Connection getConnection() throws Exception {
-        String url = "jdbc:h2:~/desktop/SQL/sukkiriShop";  // H2データベースのURL
+        String url = "jdbc:h2:~/desktop/SQL/ITWorkshop";  // H2データベースのURL
         String user = "sa";  // ユーザー名
         String password = "";  // パスワード
         return DriverManager.getConnection(url, user, password);

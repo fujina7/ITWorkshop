@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>スッキリ商店</title>
+<title>WEBスクレイピング</title>
  <!-- 外部CSSファイルの読み込み -->
     <link rel="stylesheet" type="text/css" href="css/style2.css">
     
@@ -13,7 +13,9 @@
 <body>
 
 
+
 <div class="container">
+<h1>WEBスクレイピングアプリ</h1>
   <!-- エラーメッセージの表示用DIV -->
   <!-- 登録完了メッセージの表示 -->
     <c:if test="${not empty sessionScope.registrationSuccess}">
@@ -29,8 +31,5 @@
 <input type="submit" value="新規アカウント作成" name="action">
 </form>
 </div>
-
-
-<script src="js/script.js"></script>
 </body>
 </html>

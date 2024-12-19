@@ -14,6 +14,8 @@ body {
     padding: 0;
 }
 
+
+
 /* コンテナのスタイル */
 .container {
     width: 100%;
@@ -27,6 +29,11 @@ body {
 
 /* ヘッダーのスタイル */
 h2 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+h1 {
     text-align: center;
     color: #4CAF50;
     margin-bottom: 20px;

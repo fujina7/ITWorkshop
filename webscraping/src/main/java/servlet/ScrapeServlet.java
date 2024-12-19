@@ -48,7 +48,7 @@ public class ScrapeServlet extends HttpServlet {
 
                 int count = 0;
                 for (int i = 0; i < productElements.size(); i++) {
-                    if (count >= 25) {
+                    if (count >= 30) {
                         break;
                     }
 

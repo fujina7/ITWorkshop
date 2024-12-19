@@ -11,7 +11,7 @@ import Entity.Login;
 
 public class AccountDAO {
     // データベース接続に使用する情報
-    private final String JDBC_URL = "jdbc:h2:~/desktop/SQL/sukkiriShop";
+    private final String JDBC_URL = "jdbc:h2:~/desktop/SQL/ITWorkshop";
     private final String DB_USER = "sa";
     private final String DB_PASS = "";
 

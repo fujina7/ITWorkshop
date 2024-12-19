@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>スッキリ商店</title>
-<link rel="stylesheet" type="text/css" href="http://localhost:8080/JisakuApp/css/style.css">
+<title>WEBスクレイピング</title>
+<link rel="stylesheet" type="text/css" href="css/style2.css">
 
 </head>
 <body>
