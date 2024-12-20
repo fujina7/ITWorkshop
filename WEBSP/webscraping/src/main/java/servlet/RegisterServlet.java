@@ -32,29 +32,7 @@ public class RegisterServlet extends HttpServlet {
         request.setAttribute("name", name);
         request.setAttribute("age", age);
 
-        // エラーメッセージを保持するための変数
-        String errorMessage = null;
-
-        // 入力データのバリデーションチェック（例：ユーザーIDの重複、メールの形式など）
-        if (userId == null || userId.isEmpty()) {
-            errorMessage = "ユーザーIDを入力してください。";
-        } else if (pass == null || pass.isEmpty()) {
-            errorMessage = "パスワードを入力してください。";
-        } else if (mail == null || mail.isEmpty() || !mail.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            errorMessage = "正しいメールアドレスを入力してください。";
-        } else if (name == null || name.isEmpty()) {
-            errorMessage = "名前を入力してください。";
-        } else if (age <= 0) {
-            errorMessage = "年齢は1以上の整数でなければなりません。";
-        }
-
-        // もしエラーがあれば、エラーメッセージをリクエストに設定
-        if (errorMessage != null) {
-            request.setAttribute("errorMessage", errorMessage);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
+       
 
         // AccountDAOを使用してアカウントを登録
         AccountDAO dao = new AccountDAO();

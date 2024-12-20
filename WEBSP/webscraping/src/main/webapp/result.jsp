@@ -9,8 +9,11 @@
     <link rel="stylesheet" type="text/css" href="css/style2.css">
 </head>
 <body>
-    <h2>商品リスト</h2>
+
+
+   
     <div class="container">
+     <h2>商品リスト</h2>
     <form action="ScrapeServlet" method="post">
         <label for="url">URL:</label>
         <input type="text" id="url" name="url" required/>
@@ -62,6 +65,9 @@
         }
         %>
     </div>
+    
+    
+    <div class="container2">
 
     <!-- 保存ボタンを追加 -->
     <form action="SaveProductsServlet" method="POST">
@@ -70,5 +76,6 @@
     </form>
 
     <a href="InputServlet" id="back">戻る</a>
+    </div>
 </body>
 </html>

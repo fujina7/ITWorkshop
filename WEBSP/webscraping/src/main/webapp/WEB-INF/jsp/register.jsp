@@ -9,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="css/style2.css">
 </head>
 <body>
+ <div class="background-video">
+        <video autoplay muted loop id="background-video">
+            <source src="video/background.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div class="container">
         <h2>会員登録</h2>
@@ -21,31 +26,27 @@
         <!-- 会員登録フォーム -->
         <form name="registerForm" action="RegisterServlet" method="post" onsubmit="return validateForm()">
             <label for="userId">ユーザーID:</label>
-            <input type="text" name="userId" id="userId" value="${userId}" required>
+            <input type="text" name="userId" id="userId" value="${userId}" >
             
             <label for="password">パスワード:</label>
-            <input type="password" name="password" id="password" value="${password}" required pattern="\d{4,}" title="数字4桁以上を入力してください">
+            <input type="password" name="password" id="password" value="${password}" >
 
             <label for="email">メールアドレス:</label>
-            <input type="email" name="email" id="email" value="${email}" required>
+            <input type="email" name="email" id="email" value="${email}" >
 
             <label for="name">名前:</label>
-            <input type="text" name="name" id="name" value="${name}" required>
+            <input type="text" name="name" id="name" value="${name}" >
 
             <label for="age">年齢:</label>
-            <input type="number" name="age" id="age" value="${age}" required>
+            <input type="number" name="age" id="age" value="${age}" >
 
             <input type="submit" value="登録">
             <input type="button" value="戻る" id="back" onclick="goBack()">
         </form>
 
-        <script>
-            function goBack() {
-                window.location.href = 'main.jsp';
-            }
-        </script>
+        
 
     </div>
-
+<script src="js/script.js" type="text/javascript"></script>
 </body>
 </html>

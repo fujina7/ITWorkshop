@@ -10,6 +10,12 @@
 
 </head>
 <body>
+
+ <div class="background-video">
+        <video autoplay muted loop id="background-video">
+            <source src="video/background.mp4" type="video/mp4">
+        </video>
+    </div>
 <div class="container">
 
  <p>ログイン情報に誤りがあります</p>

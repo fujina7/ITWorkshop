@@ -7,6 +7,12 @@
     
 </head>
 <body>
+ <div class="background-video">
+        <video autoplay muted loop id="background-video">
+            <source src="video/background.mp4" type="video/mp4">
+        </video>
+    </div>
+
 <div class="container">
     <h2>スクレイピングURLを入力してください</h2>
     
@@ -21,5 +27,7 @@
     </c:if>
      <a href="LogoutServlet" id="back">ログアウト</a>
      </div>
+     
+     <script src="js/script.js" type="text/javascript"></script>
 </body>
 </html>

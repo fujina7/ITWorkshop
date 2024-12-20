@@ -13,12 +13,13 @@
 ## プロジェクトについて
 授業の一環としてWebアプリケーションを作成しました。 <br>
 
+
 ・<span style="color: #ADD8E6;">ターゲットユーザー</span> <br>
 　　ショップで検索した商品情報を取得して、別々のショップ同士での価格の比較を行いたい方　<br>
 ・<span style="color: #ADD8E6;">アプリ導入による効果</span> <br>
-　　商品情報を一括で保存できるので価格比較する際にちょっとだけ
+　　価格比較したいショップをピンポイントに選択できる　<br>
 ・<span style="color: #ADD8E6;">所感</span> <br>
-　　もろもろの機能をAIを活用して搭載、改修を行ったため、無駄にファイル数が多くなってしまったり、メ ンテナンス性に欠けるコードになってしまい作り直す予定でしたが不具合とエラーの多発で時間が無くなり断念しました。 <br>
+　　アプリの機能自体は想像通りのものを実装できましたが、最終的には、保存した商品情報をブラウザ上に表示、価格順などの並び変え等の機能を実装する予定でしたが、時間が足りなく見送りました。 <br>
 <p align="right">(<a href="#top">トップへ</a>)</p>
 
 ## 環境
@@ -58,15 +59,18 @@
 
 
 ## 実行準備
-0.　　※必ず利用前にreadme.txtをご確認ください。
+0.　　<span style="color:rgb(187, 77, 14);">※必ず利用前にreadme.txtをご確認ください。</span>
 
 1.　　.Githubからリポジトリをクローン <br>
 
 2.　　Eclipseに「webscraping」をインポート <br>
 
-3_1.　H2 Databaseで「ITWorkshop_test.mv.db」を読み込み <br>
-3_2.　readme.txtに従い取得するサイトの情報を追加する<br>
+3_1.　SQLフォルダをデスクトップ上に配置し、中の「ITWorkshop_test.mv.db」の名前を「ITWorkshop.mv.db」に変更する<br>
+3_2.　H2 Databaseで「ITWorkshop.mv.db」を読み込み <br>
+3_3.　readme.txtに従い取得するサイトの情報を追加する<br>
 
 4.　　Tomcat9_Java17で「servlet/Main.java」を実行 <br>
+
+補足.　/webscraping/src/main/webapp/videoフォルダ内に任意のMP4動画「background.mp4」を配置することで背景を変更できる
 
 <p align="right">(<a href="#top">トップへ</a>)</p>

@@ -5,6 +5,8 @@
     box-sizing: border-box;
 }
 
+
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
@@ -13,7 +15,26 @@ body {
     margin: 0;
     padding: 0;
 }
+/* 背景動画のスタイル */
+.background-video {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index:-1; /* 背景に配置 */
+}
 
+#background-video {
+	position: absolute;
+        top: 0;
+        left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* アスペクト比を維持しつつ、画面いっぱいにフィット */
+    object-position: center;
+}
 
 
 /* コンテナのスタイル */
@@ -27,17 +48,24 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* コンテナのスタイル */
+.container2 {
+    width: auto;
+    max-width: 200px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 /* ヘッダーのスタイル */
 h2 {
     text-align: center;
     color: #4CAF50;
     margin-bottom: 20px;
 }
-h1 {
-    text-align: center;
-    color: #4CAF50;
-    margin-bottom: 20px;
-}
+
 
 /* エラーメッセージのスタイル */
 .error {
