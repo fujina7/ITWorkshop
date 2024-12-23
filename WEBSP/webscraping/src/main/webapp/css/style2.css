@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+input::placeholder {
+    color: rgb(192, 192, 192);  /* より薄いグレー */
+    font-size: 14px;
+    font-style: italic;
+}
 
 
 body {
@@ -99,6 +104,14 @@ input[type="button"] {
     background-color: #f9f9f9;
     transition: background-color 0.3s, border 0.3s;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
 
 /* フォームの入力フィールドのホバー効果 */
 input[type="text"]:focus,

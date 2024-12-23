@@ -44,8 +44,8 @@
  
  
 <form action="LoginServlet" method="post" onsubmit="return validateForm()">
-ユーザーID:<input type="text" name="userId" ><br>
-パスワード<input type="password" name="pass" ><br>
+ID:<input type="text" placeholder="ユーザーID" name="userId" ><br>
+パスワード:<input type="password" placeholder="パスワード" name="pass" ><br>
 <input type="submit" value="ログイン" name="action" ><br><br>
 <input type="submit" value="新規アカウント作成" name="action">
 </form>

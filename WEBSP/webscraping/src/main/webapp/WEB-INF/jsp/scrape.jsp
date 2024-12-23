@@ -18,7 +18,7 @@
     
     <form action="ScrapeServlet" method="post">
         <label for="url">URL:</label>
-        <input type="text" id="url" name="url" required/>
+        <input type="text" placeholder="URL" id="url" name="url" required/>
         <input type="submit" value="取得開始" />
     </form>
 
