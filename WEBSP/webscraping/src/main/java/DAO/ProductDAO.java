@@ -14,7 +14,7 @@ public class ProductDAO {
 
     // H2データベースに接続するメソッド
     private static Connection getConnection() throws SQLException {
-        String url = "jdbc:h2:~/desktop/SQL/ITWorkshop";  // H2データベースのURL
+        String url = "jdbc:h2:~/desktop/SQL_WS/ITWorkshop";  // H2データベースのURL
         String user = "sa";  // ユーザー名
         String password = "";  // パスワード
         return DriverManager.getConnection(url, user, password);

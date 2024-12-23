@@ -9,8 +9,8 @@ function validateForm() {
     var age = document.forms["registerForm"]["age"].value;
 
     // ユーザーID、名前、年齢が空でないことを確認
-    if (userId == "" || name == "" || age == "") {
-        alert("ユーザーID、名前、年齢は必須です。");
+    if (userId == "" || name == "" || age == ""  || password == "" || email == "") {
+        alert("ユーザーID、パスワード、メールアドレス、名前、年齢は必須です。");
         return false;
     }
 
