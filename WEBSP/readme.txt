@@ -81,9 +81,35 @@ WEBスクレイピングを通じて商品情報を取得する際は、必ず�
 ・ IMAGE_URL   =　"商品画像URL"
 
 
+
+
+
+＿＿＿＿＿【H2DBの操作コード】＿＿＿＿＿＿＿＿
+
+
+サイト情報の追記・編集
+
+【追記コード】
+
+insert into PRODUCT_SELECTORS
+ (ID , STORE_NAME , PRODUCT_NAME_SELECTOR , PRODUCT_PRICE_SELECTOR,  SITE_NAME , PRODUCT_IMAGE_SELECTOR  )
+values(,'','','','','')
+
+
+
+【上書き編集コード】
+update PRODUCT_SELECTORS
+set  PRODUCT_NAME_SELECTOR   ='',
+PRODUCT_PRICE_SELECTOR  ='',
+PRODUCT_IMAGE_SELECTOR  =''
+where id =
+
+
+
+
+
+
 H2DBにおける商品価格の並び替え：
-
-
 
 【昇順コード】
 
