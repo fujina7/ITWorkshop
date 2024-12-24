@@ -81,6 +81,23 @@ WEBスクレイピングを通じて商品情報を取得する際は、必ず�
 ・ IMAGE_URL   =　"商品画像URL"
 
 
+H2DBにおける商品価格の並び替え：
+
+
+
+【昇順コード】
+
+SELECT * FROM products 
+ORDER BY CAST(REPLACE(REPLACE(REPLACE(REPLACE(price, ',', ''), '円', ''), '〜', ''), '¥ ', '') AS DECIMAL) ASC;
+
+
+【降順コード】
+
+SELECT * FROM products 
+ORDER BY CAST(REPLACE(REPLACE(REPLACE(REPLACE(price, ',', ''), '円', ''), '〜', ''), '¥ ', '') AS DECIMAL) DESC;
+
+
+
 
 
 
